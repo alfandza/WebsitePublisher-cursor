@@ -4,6 +4,12 @@ Manage your WebsitePublisher websites directly from [Cursor](https://cursor.com)
 
 WebsitePublisher gives Cursor access to tools for managing websites, pages, entities, forms, publishing, scheduling, and other WebsitePublisher operations.
 
+## Requirements
+
+- Cursor with MCP support
+- A WebsitePublisher account
+- Internet access to `https://mcp.websitepublisher.ai/`
+
 ## Features
 
 - Manage WebsitePublisher websites
@@ -18,15 +24,37 @@ WebsitePublisher gives Cursor access to tools for managing websites, pages, enti
 
 ## Installation
 
-Install **WebsitePublisher** from the Cursor Plugin Marketplace.
+### Plugin installation
 
-After installation, Cursor will connect to the WebsitePublisher MCP server.
+Install **WebsitePublisher AI** from the Cursor Plugin Marketplace when it becomes available.
 
-If authentication is required, Cursor will open the WebsitePublisher sign-in and authorization flow.
+For development or repository-based testing, install the plugin from this repository using Cursor's local plugin workflow, then reload Cursor and open **Customize** to confirm that the WebsitePublisher MCP server is enabled.
 
-Sign in to your WebsitePublisher account and authorize Cursor to access your WebsitePublisher account.
+### Manual MCP configuration
 
-Once authentication is complete, the WebsitePublisher tools will be available in Cursor.
+If the plugin is not available in your marketplace, add the following to your user MCP configuration at `%USERPROFILE%\\.cursor\\mcp.json`:
+
+```json
+{
+	"mcpServers": {
+		"websitepublisher": {
+			"url": "https://mcp.websitepublisher.ai/"
+		}
+	}
+}
+```
+
+Restart Cursor after saving the configuration. Use Agent mode and enable the WebsitePublisher server from **Customize**.
+
+## First connection
+
+After installation, Cursor connects to the WebsitePublisher MCP server over Streamable HTTP. On the first tool call, Cursor opens the WebsitePublisher OAuth sign-in and authorization flow.
+
+1. Sign in to your WebsitePublisher account, or create an account.
+2. Authorize Cursor to access WebsitePublisher.
+3. Return to Cursor and retry the request if necessary.
+
+Once authentication is complete, the WebsitePublisher tools become available in Agent mode.
 
 ## Authentication
 
@@ -41,9 +69,19 @@ When authentication is requested:
 3. Return to Cursor.
 4. Continue using the WebsitePublisher tools.
 
-## Usage
+## What you can do
 
 Once WebsitePublisher is connected, you can interact with your websites through Cursor using natural language.
+
+The available tools include:
+
+- Projects and project status
+- Pages, HTML, versions, and rollbacks
+- Assets such as images, CSS, JavaScript, JSON, and SVG files
+- Entities and records
+- Forms and submissions
+- Publishing and scheduling
+- Connected integrations
 
 For example:
 
@@ -71,7 +109,21 @@ Show me the fields of the <entity-name> entity.
 Publish the <page-name> page.
 ```
 
+```text
+Show me the homepage version history and summarize the latest changes.
+```
+
+```text
+Create a contact form for the <project-name> project and connect it to email.
+```
+
+```text
+Build a portfolio website using WebsitePublisher with home, about, and contact pages.
+```
+
 Cursor will select the appropriate WebsitePublisher tools to perform the requested operation.
+
+Review generated changes before publishing or deleting content. Page replacement, asset deletion, record deletion, and rollback operations can affect live websites.
 
 ## Troubleshooting
 
@@ -79,14 +131,15 @@ Cursor will select the appropriate WebsitePublisher tools to perform the request
 
 If the WebsitePublisher tools do not appear in Cursor:
 
-1. Make sure the WebsitePublisher plugin is installed.
-2. Make sure you have completed the WebsitePublisher authentication flow.
-3. Check that the MCP connection is active.
-4. Reconnect or refresh the MCP connection in Cursor.
+1. Make sure Cursor is in Agent mode.
+2. Make sure the WebsitePublisher plugin or MCP configuration is installed.
+3. Open **Customize** and confirm that the server is enabled.
+4. Restart Cursor after changing `mcp.json`.
+5. Check Cursor's **MCP Logs** for connection errors.
 
 ### Authentication fails
 
-If the OAuth authentication flow fails, complete the sign-in process again and make sure you authorize Cursor to access WebsitePublisher.
+If the OAuth authentication flow fails, complete the sign-in process again and make sure you authorize Cursor to access WebsitePublisher. Make sure your browser can reach `https://mcp.websitepublisher.ai/` and that pop-ups are not blocked.
 
 If the problem persists, contact WebsitePublisher support.
 
@@ -94,10 +147,15 @@ If the problem persists, contact WebsitePublisher support.
 
 If a change made through Cursor is not visible on your website, verify the relevant WebsitePublisher publishing status and refresh the website.
 
+### Manual configuration does not load
+
+Confirm that the file is located at `%USERPROFILE%\\.cursor\\mcp.json`, that it uses the `mcpServers` key, and that the server URL is exactly `https://mcp.websitepublisher.ai/`.
+
 ## Links
 
 - [WebsitePublisher](https://www.websitepublisher.ai)
 - [WebsitePublisher MCP Documentation](https://www.websitepublisher.ai/docs/mcp)
+- [MCP server discovery](https://mcp.websitepublisher.ai/.well-known/mcp.json)
 - [Cursor](https://cursor.com)
 
 ## Support
